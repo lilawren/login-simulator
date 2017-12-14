@@ -1,0 +1,26 @@
+{
+  "name": "login-simulator",
+  "version": "1.0.0",
+  "description": "Experience the joy of creating a user account, logging in, and changing your password without having to interact with a product to interact with.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lilawren/login-simulator.git"
+  },
+  "author": "Lawrence Li",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lilawren/login-simulator/issues"
+  },
+  "homepage": "https://github.com/lilawren/login-simulator#readme",
+  "dependencies": {
+    "express": "^4.16.2"
+  },
+  "devDependencies": {
+    "eslint": "^4.13.1"
+  }
+}
