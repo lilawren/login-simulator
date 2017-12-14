@@ -19,6 +19,9 @@
             <input type="password" name="passwordConf" placeholder="Confirm Password" required="">
             <input type="submit" value="REGISTER">
         </form>
+        <% if (typeof errorMessage !== 'undefined') { %>
+            <%= errorMessage %>
+        <% } %>
     </div>
 </body>
 </html>
