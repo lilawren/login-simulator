@@ -18,7 +18,12 @@
   },
   "homepage": "https://github.com/lilawren/login-simulator#readme",
   "dependencies": {
-    "express": "^4.16.2"
+    "bcrypt": "^1.0.3",
+    "body-parser": "^1.18.2",
+    "connect-mongo": "^2.0.0",
+    "express": "^4.16.2",
+    "express-session": "^1.15.6",
+    "mongoose": "^4.13.7"
   },
   "devDependencies": {
     "eslint": "^4.13.1"
