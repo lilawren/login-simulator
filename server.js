@@ -13,8 +13,10 @@ var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function () {
     console.log('DB CONNECTED');
-    // we're connected!
 });
+
+// set templating engine
+app.set('view engine', 'ejs')
 
 // //use sessions for tracking logins
 app.use(session({
@@ -33,8 +35,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 var routes = require('./routes/router');
 app.use('/', routes);
 
-// serve static files from /client
-app.use(express.static(__dirname + '/client'));
+// serve static files from /views
+app.use(express.static(__dirname + '/views'));
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

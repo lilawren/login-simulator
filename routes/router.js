@@ -5,7 +5,7 @@ var path = require('path');
 
 
 router.get('/', function (req, res) {
-    res.sendFile(path.join(__dirname + '/../client/index.html'));
+    res.sendFile(path.join(__dirname + '/../views/index.html'));
 });
 
 //POST route for updating data
@@ -65,7 +65,10 @@ router.get('/profile', function (req, res, next) {
                     err.status = 400;
                     return next(err);
                 } else {
-                    return res.send('<h1>Name: </h1>' + user.username + '<h2>Mail: </h2>' + user.email + '<br><a type="button" href="/logout">Logout</a>')
+                    res.render('profile', {
+                        username: user.username,
+                        email: user.email
+                    });
                 }
             }
         });
