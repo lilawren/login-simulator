@@ -8,5 +8,6 @@ Made using:
 - bcrypt
 - express-session
 - ejs
+- sendgrid
 
 Check it out at <a href='https://login-simulator.herokuapp.com/'>https://login-simulator.herokuapp.com/</a>.
