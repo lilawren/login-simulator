@@ -62,5 +62,5 @@ app.use(function (err, req, res, next) {
 
 let port = inDev ? 8000 : process.env.PORT;
 app.listen(port, function () {
-    console.log('Express app listening on port ' + port);
+    console.log('Express app listening on port ' + port + ' dev:' + inDev);
 });
