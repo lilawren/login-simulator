@@ -5,8 +5,11 @@ var mongoose = require('mongoose');
 var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
 
+require('dotenv').load();
+
 //connect to MongoDB
-mongoose.connect('mongodb://localhost/authDb');
+let mLabUri = 'mongodb://' + process.env.dBusername + ':' + process.env.dBpassword + '@ds141786.mlab.com:41786/loginsimulator';
+mongoose.connect(mLabUri);
 var db = mongoose.connection;
 
 //handle mongo error
