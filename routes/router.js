@@ -61,7 +61,7 @@ router.post('/', function (req, res, next) {
                     to: user.email,
                     from: 'no-reply@loginsimulator.com',
                     subject: 'Confirm your Login Simulator account',
-                    html: '<div><h1>login simulator</h1><h2>Welcome, ' + user.username + '!</h2><p>Please click the link below to visit your profile</p><a href=\'http://' + req.headers.host + '/profile\'>View Profile</a></div>',
+                    html: '<div><h1>Login Simulator</h1><h2>Welcome, ' + user.username + '!</h2><p>Please click the link below to visit your profile</p><a href=\'http://' + req.headers.host + '/profile\'>View Profile</a></div>',
                 };
                 sgMail.send(msg);
 
@@ -112,7 +112,7 @@ router.post('/update', mid.requiresLogin, function (req, res, next) {
         else {
             User.authenticate(user.email, req.body.curPassword, function (error, user) {
                 if (error || !user) {
-                    var err = new Error('Wrong password.');
+                    var err = new Error('Wrong current password.');
                     err.status = 401;
                     return next(err);
                 }
@@ -131,8 +131,8 @@ router.post('/update', mid.requiresLogin, function (req, res, next) {
                                 const msg = {
                                     to: user.email,
                                     from: 'no-reply@loginsimulator.com',
-                                    subject: 'Your login simulator password has changed',
-                                    html: '<div><h1>login simulator</h1><h2>Hi, ' + user.username + ',</h2><p>Your password has been changed. If this was not done by you, contact us at help@loginsimlator.com</p></div>',
+                                    subject: 'Your Login Simulator password has changed',
+                                    html: '<div><h1>Login Simulator</h1><h2>Hi ' + user.username + ',</h2><p>Your password has been changed. If this was not done by you, contact us at help@loginsimlator.com</p></div>',
                                 };
                                 sgMail.send(msg);
 
