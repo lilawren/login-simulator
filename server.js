@@ -8,6 +8,7 @@ var MongoStore = require('connect-mongo')(session);
 require('dotenv').load();
 
 var env = process.env.NODE_ENV || 'dev';
+console.log('node env:' + process.env.NODE_ENV);
 var inDev = env == 'dev';
 
 //connect to MongoDB
