@@ -5,8 +5,16 @@ var mongoose = require('mongoose');
 var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
 
+require('dotenv').load();
+
+var env = process.env.NODE_ENV || 'dev';
+console.log('node env:' + process.env.NODE_ENV);
+var inDev = env == 'dev';
+
 //connect to MongoDB
-mongoose.connect('mongodb://localhost/authDb');
+const mLabUri = 'mongodb://' + process.env.dbUsername + ':' + process.env.dbPassword + '@ds141786.mlab.com:41786/loginsimulator';
+const localDbUri = 'mongodb://localhost/authDb';
+mongoose.connect(inDev ? localDbUri : mLabUri);
 var db = mongoose.connection;
 
 //handle mongo error
@@ -53,7 +61,7 @@ app.use(function (err, req, res, next) {
 });
 
 
-
-app.listen(8000, function () {
-    console.log('Express app listening on port 8000');
+let port = inDev ? 8000 : process.env.PORT;
+app.listen(port, function () {
+    console.log('Express app listening on port ' + port + ' dev:' + inDev);
 });
