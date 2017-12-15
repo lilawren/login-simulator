@@ -3,7 +3,8 @@ var router = express.Router();
 var User = require('../models/user');
 var path = require('path');
 var utils = require('./utils.js');
-var mid = require('./mid.js')
+var mid = require('./mid.js');
+var bcrypt = require('bcrypt');
 
 router.get('/', function (req, res, next) {
     // send user to profile if already logged in
@@ -19,13 +20,11 @@ router.get('/password', mid.requiresLogin, function (req, res, next) {
     res.render('password', {});
 });
 
-//POST route for updating data
+//POST route for creating user/login
 router.post('/', function (req, res, next) {
     // confirm that user typed same password twice
     if (req.body.password !== req.body.passwordConf) {
-        let err = new Error('Passwords do not match.');
-        err.status = 400;
-        res.send("Passwords dont match");
+        let err = utils.createError('Passwords do not match');
         return next(err);
     }
 
@@ -33,12 +32,12 @@ router.post('/', function (req, res, next) {
     if (req.body.email && req.body.username && req.body.password && req.body.passwordConf) {
         // testing of inputs
         if (utils.validateEmail(req.body.email) == false) {
-            let err = utils.sendError(res, 'Email is invalid');
+            let err = utils.createError('Email is invalid');
             return next(err);
         }
 
         if (utils.validatePassword(req.body.password) == false) {
-            let err = utils.sendError(res, 'Password needs at least one digit, one special character e.g. !@#$%^&* and a minimum length of 8');
+            let err = utils.createError('Password needs at least one digit, one special character e.g. !@#$%^&* and a minimum length of 8');
             return next(err);
         }
 
@@ -58,7 +57,7 @@ router.post('/', function (req, res, next) {
         });
 
     }
-    else if (req.body.logemail && req.body.logpassword) {
+    else if (req.body.logemail && req.body.logpassword) { // User log in
         User.authenticate(req.body.logemail, req.body.logpassword, function (error, user) {
             if (error || !user) {
                 var err = new Error('Wrong email or password.');
@@ -74,6 +73,49 @@ router.post('/', function (req, res, next) {
         err.status = 400;
         return next(err);
     }
+})
+
+//POST route for updating password
+router.post('/update', mid.requiresLogin, function (req, res, next) {
+    if (!req.body.curPassword) {
+        let err = utils.createError('Current password required');
+        return next(err);
+    }
+    if (req.body.password !== req.body.passwordConf) {
+        let err = utils.createError('Passwords do not match');
+        return next(err);
+    }
+
+    User.findById(req.session.userId)
+    .exec(function (error, user) {
+        if (error) {
+            return next(error);
+        } else {
+
+            User.authenticate(user.email, req.body.curPassword, function (error, user) {
+                if (error || !user) {
+                    var err = new Error('Wrong password.');
+                    err.status = 401;
+                    return next(err);
+                } else {
+                    bcrypt.hash(req.body.password, 10, function (error, hash) {
+                        if (error) {
+                            return next(err);
+                        }
+                        // update user's password here
+                        const doc = { password: hash }
+                        User.update({_id: user.id}, doc, function (error, raw) {
+                            if (error) {
+                                return next(error);
+                            } else {
+                                return res.redirect('/profile');
+                            }
+                        })
+                    })
+                }
+            });
+        }
+    });
 })
 
 // GET route after registering

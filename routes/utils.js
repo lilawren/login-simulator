@@ -8,10 +8,9 @@ module.exports = {
         var re = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,}$/
         return re.test(password);
     },
-    sendError(res, message) {
+    createError(message) {
         let err = new Error(message);
         err.status = 400;
-        res.send(message);
         return err;
     }
 }
