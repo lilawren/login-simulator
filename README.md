@@ -4,8 +4,9 @@ Experience the joy of creating a user account, logging in, receiving confirmatio
 Made using:
 - express
 - mongoose + mLabs mongoDb
-- express-session
 - connect-mongo
+- bcrypt
+- express-session
 - ejs
 
 Check it out at <a href='https://login-simulator.herokuapp.com/'>https://login-simulator.herokuapp.com/</a>.

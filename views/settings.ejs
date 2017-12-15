@@ -1,14 +1,21 @@
 <html>
+<head>
+    <link rel="stylesheet" href="./css/styles.css">
+</head>
 <body>
     <a href='/profile'>Go Back to Profile</a>
     <h1>Settings</h1>
     <h3>Change Password</h3>
-    <form action="/update" method="post">
-        <input type="password" name="curPassword" placeholder="CurrentPassword" required="">
-        </br>
-        <input type="password" name="password" placeholder="Password" required="">
-        <input type="password" name="passwordConf" placeholder="Confirm Password" required="">
-        <input type="submit" value="SAVE">
-    </form>
+    <p>Please enter your current password and desired password.</p>
+
+    <div class='centered-forms'>
+        <form class='login-register-form' action="/update" method="post">
+            <input type="password" name="curPassword" placeholder="Current Password" required="">
+            </br>
+            <input type="password" name="password" placeholder="Password" required="">
+            <input type="password" name="passwordConf" placeholder="Confirm Password" required="">
+            <input type="submit" value="SAVE">
+        </form>
+    </div>
 </body>
 </html>

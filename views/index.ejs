@@ -1,26 +1,30 @@
 <html>
 <head>
+    <link rel="stylesheet" href="./css/styles.css">
 </head>
 <body>
     <h1>Login Simulator</h1>
     <i>Experience the joy of creating a user account, logging in, receiving confirmation emails, and changing your password without having to interact with a product.</i>
-    <div>
-        <h1>Log in</h1>
-        <form action="/" method="post">
-            <input type="text" name="logemail" placeholder="E-mail" required="">
-            <input type="password" name="logpassword" placeholder="Password" required="">
-            <input type="submit" value="LOGIN NOW">
-        </form>
-    </div>
-    <div>
-        <h1>Register</h1>
-        <form action="/" method="post">
-            <input type="text" name="email" placeholder="E-mail" required="">
-            <input type="text" name="username" placeholder="Username" required="">
-            <input type="password" name="password" placeholder="Password" required="">
-            <input type="password" name="passwordConf" placeholder="Confirm Password" required="">
-            <input type="submit" value="REGISTER">
-        </form>
+
+    <div class='centered-forms'>
+        <div>
+            <h1>Log in</h1>
+            <form class='login-register-form' action="/" method="post">
+                <input type="text" name="logemail" placeholder="E-mail" required="">
+                <input type="password" name="logpassword" placeholder="Password" required="">
+                <input type="submit" value="LOGIN">
+            </form>
+        </div>
+        <div>
+            <h1>Register</h1>
+            <form class='login-register-form' action="/" method="post">
+                <input type="text" name="email" placeholder="E-mail" required="">
+                <input type="text" name="username" placeholder="Username" required="">
+                <input type="password" name="password" placeholder="Password" required="">
+                <input type="password" name="passwordConf" placeholder="Confirm Password" required="">
+                <input type="submit" value="REGISTER">
+            </form>
+        </div>
     </div>
 </body>
 </html>

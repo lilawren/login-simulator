@@ -1,0 +1,15 @@
+.centered-forms {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-around;
+    margin: 0 20%;
+}
+
+.login-register-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.login-register-form input {
+    margin-bottom: 5px;
+}

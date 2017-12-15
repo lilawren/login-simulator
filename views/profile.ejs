@@ -1,9 +1,15 @@
 <html>
+<head>
+    <link rel="stylesheet" href="./css/styles.css">
+</head>
 <body>
-    <h1>Welcome, <%= username %></h1>
+    <div>
+        <h1>Welcome, <%= username %></h1>
+        <p>Enjoy your time at login simulator!</p>
+        <p>Your confirmations will be sent to: <%= email %></p>
+    </div>
+
+    <a type="button" href="/settings">Settings</a>
     <a type="button" href="/logout">Logout</a>
-    <p>email: <%= email %></p>
-    <br>
-    <a type="button" href="/settings">User Settings</a>
 </body>
 </html>
