@@ -5,6 +5,11 @@ var path = require('path');
 var utils = require('./utils.js');
 var mid = require('./mid.js');
 var bcrypt = require('bcrypt');
+var sgMail = require('@sendgrid/mail');
+
+require('dotenv').load();
+
+sgMail.setApiKey(process.env.SEND_MAIL_KEY);
 
 router.get('/', function (req, res, next) {
     // send user to profile if already logged in
@@ -16,8 +21,9 @@ router.get('/', function (req, res, next) {
     }
 });
 
-router.get('/password', mid.requiresLogin, function (req, res, next) {
-    res.render('password', {});
+router.get('/settings', mid.requiresLogin, function (req, res, next) {
+    res.header('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
+    res.render('settings', {});
 });
 
 //POST route for creating user/login
@@ -51,6 +57,14 @@ router.post('/', function (req, res, next) {
             if (error) {
                 return next(error);
             } else {
+                const msg = {
+                    to: user.email,
+                    from: 'no-reply@loginsimulator.com',
+                    subject: 'Confirm your Login Simulator account',
+                    html: '<div><h1>login simulator</h1><h2>Welcome, ' + user.username + '!</h2><p>Please click the link below to visit your profile</p><a href=\'http://localhost:8000/profile\'>click here</a></div>',
+                };
+                sgMail.send(msg);
+
                 req.session.userId = user._id;
                 return res.redirect('/profile');
             }
@@ -85,13 +99,16 @@ router.post('/update', mid.requiresLogin, function (req, res, next) {
         let err = utils.createError('Passwords do not match');
         return next(err);
     }
+    if (utils.validatePassword(req.body.password) == false) {
+        let err = utils.createError('Password needs at least one digit, one special character e.g. !@#$%^&* and a minimum length of 8');
+        return next(err);
+    }
 
-    User.findById(req.session.userId)
-    .exec(function (error, user) {
+    User.findById(req.session.userId).exec(function (error, user) {
         if (error) {
             return next(error);
-        } else {
-
+        }
+        else {
             User.authenticate(user.email, req.body.curPassword, function (error, user) {
                 if (error || !user) {
                     var err = new Error('Wrong password.');
@@ -104,10 +121,18 @@ router.post('/update', mid.requiresLogin, function (req, res, next) {
                         }
                         // update user's password here
                         const doc = { password: hash }
-                        User.update({_id: user.id}, doc, function (error, raw) {
+                        User.update({ _id: user.id }, doc, function (error, raw) {
                             if (error) {
                                 return next(error);
                             } else {
+                                const msg = {
+                                    to: user.email,
+                                    from: 'no-reply@loginsimulator.com',
+                                    subject: 'Your login simulator password has changed',
+                                    html: '<div><h1>login simulator</h1><h2>Hi, ' + user.username + ',</h2><p>Your password has been changed. If this was not done by you, contact us at help@loginsimlator.com</p></div>',
+                                };
+                                sgMail.send(msg);
+
                                 return res.redirect('/profile');
                             }
                         })
@@ -118,8 +143,9 @@ router.post('/update', mid.requiresLogin, function (req, res, next) {
     });
 })
 
-// GET route after registering
 router.get('/profile', mid.requiresLogin, function (req, res, next) {
+    res.header('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
+
     User.findById(req.session.userId)
         .exec(function (error, user) {
             if (error) {

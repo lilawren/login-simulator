@@ -18,9 +18,11 @@
   },
   "homepage": "https://github.com/lilawren/login-simulator#readme",
   "dependencies": {
+    "@sendgrid/mail": "^6.1.4",
     "bcrypt": "^1.0.3",
     "body-parser": "^1.18.2",
     "connect-mongo": "^2.0.0",
+    "dotenv": "^4.0.0",
     "ejs": "^2.5.7",
     "express": "^4.16.2",
     "express-session": "^1.15.6",
