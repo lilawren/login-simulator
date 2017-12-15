@@ -54,6 +54,6 @@ app.use(function (err, req, res, next) {
 
 
 
-app.listen(8000, function () {
-    console.log('Express app listening on port 8000');
+app.listen(process.env.PORT, function () {
+    console.log('Express app listening on port' + process.env.PORT);
 });
