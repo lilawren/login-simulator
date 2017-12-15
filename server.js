@@ -12,7 +12,7 @@ console.log('node env:' + process.env.NODE_ENV);
 var inDev = env == 'dev';
 
 //connect to MongoDB
-const mLabUri = 'mongodb://' + process.env.dbUsername + ':' + process.env.dbPassword + '@ds141786.mlab.com:41786/loginsimulator';
+const mLabUri = 'mongodb://' + process.env.DB_USERNAME + ':' + process.env.DB_PASSWORD + '@ds141786.mlab.com:41786/loginsimulator';
 const localDbUri = 'mongodb://localhost/authDb';
 mongoose.connect(inDev ? localDbUri : mLabUri);
 var db = mongoose.connection;
@@ -28,7 +28,7 @@ app.set('view engine', 'ejs')
 
 // //use sessions for tracking logins
 app.use(session({
-    secret: 'magical koolaid here',
+    secret: process.env.SESSION_SECRET,
     resave: true,
     saveUninitialized: false,
     store: new MongoStore({

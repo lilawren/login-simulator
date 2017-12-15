@@ -82,7 +82,8 @@ router.post('/', function (req, res, next) {
                 return res.redirect('/profile');
             }
         });
-    } else {
+    }
+    else {
         var err = new Error('All fields required.');
         err.status = 400;
         return next(err);
@@ -114,7 +115,8 @@ router.post('/update', mid.requiresLogin, function (req, res, next) {
                     var err = new Error('Wrong password.');
                     err.status = 401;
                     return next(err);
-                } else {
+                }
+                else {
                     bcrypt.hash(req.body.password, 10, function (error, hash) {
                         if (error) {
                             return next(err);
@@ -124,7 +126,8 @@ router.post('/update', mid.requiresLogin, function (req, res, next) {
                         User.update({ _id: user.id }, doc, function (error, raw) {
                             if (error) {
                                 return next(error);
-                            } else {
+                            }
+                            else {
                                 const msg = {
                                     to: user.email,
                                     from: 'no-reply@loginsimulator.com',
@@ -150,12 +153,14 @@ router.get('/profile', mid.requiresLogin, function (req, res, next) {
         .exec(function (error, user) {
             if (error) {
                 return next(error);
-            } else {
+            }
+            else {
                 if (user === null) {
                     var err = new Error('Not authorized! Go back!');
                     err.status = 400;
                     return next(err);
-                } else {
+                }
+                else {
                     res.render('profile', {
                         username: user.username,
                         email: user.email
@@ -171,7 +176,8 @@ router.get('/logout', function (req, res, next) {
         req.session.destroy(function (err) {
             if (err) {
                 return next(err);
-            } else {
+            }
+            else {
                 return res.redirect('/');
             }
         });
