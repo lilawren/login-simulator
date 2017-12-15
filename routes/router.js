@@ -60,8 +60,8 @@ router.post('/', function (req, res, next) {
                 const msg = {
                     to: user.email,
                     from: 'no-reply@loginsimulator.com',
-                    subject: 'Confirm your Login Simulator account',
-                    html: '<div><h1>Login Simulator</h1><h2>Welcome, ' + user.username + '!</h2><p>Please click the link below to visit your profile</p><a href=\'http://' + req.headers.host + '/profile\'>View Profile</a></div>',
+                    subject: 'Welcome to Login Simulator',
+                    html: '<div><h1>Login Simulator</h1><h2>Welcome, ' + user.username + '!</h2><p>Click the link below to visit your profile</p><a href=\'http://' + req.headers.host + '/profile\'>View Profile</a></div>',
                 };
                 sgMail.send(msg);
 
